@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bret Tovar - AI Engineer & Data Analyst</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8m0-12a4 4 0 1 0 4 4 4 4 0 0 0-4-4m0 6a2 2 0 1 1 2-2 2 2 0 0 1-2 2' fill='%233B82F6'/%3E%3C/svg%3E">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1117;
+            color: #e6edf3;
+            scroll-behavior: smooth;
+        }
+        .section {
+            padding: 4rem 1rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+        .bg-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+        }
+        /* Estilos para el canvas 3D que cubre el fondo del Hero */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Asegura que esté por encima de la imagen de fondo si la hubiera */
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Librería Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="antialiased">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-black bg-opacity-70 backdrop-blur-sm shadow-lg border-b border-gray-700">
+        <nav class="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#hero" class="text-xl font-bold text-blue-400 hover:text-blue-300 transition-colors">Bret Tovar</a>
+            <ul class="hidden md:flex space-x-6 text-sm font-medium">
+                <li><a href="#resumen" class="text-gray-300 hover:text-blue-400 transition-colors">Resumen</a></li>
+                <li><a href="#habilidades" class="text-gray-300 hover:text-blue-400 transition-colors">Habilidades</a></li>
+                <li><a href="#formacion" class="text-gray-300 hover:text-blue-400 transition-colors">Formación</a></li>
+                <li><a href="#contacto" class="text-gray-300 hover:text-blue-400 transition-colors">Contacto</a></li>
+            </ul>
+            <div class="md:hidden">
+                <button id="menu-button" class="text-gray-300 hover:text-blue-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 border-t border-gray-700">
+            <ul class="flex flex-col items-center py-4 space-y-4 text-sm font-medium">
+                <li><a href="#resumen" class="text-gray-300 hover:text-blue-400 transition-colors mobile-link">Resumen</a></li>
+                <li><a href="#habilidades" class="text-gray-300 hover:text-blue-400 transition-colors mobile-link">Habilidades</a></li>
+                <li><a href="#formacion" class="text-gray-300 hover:text-blue-400 transition-colors mobile-link">Formación</a></li>
+                <li><a href="#contacto" class="text-gray-300 hover:text-blue-400 transition-colors mobile-link">Contacto</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="relative section text-center min-h-screen flex flex-col justify-center overflow-hidden">
+        <!-- Canvas para la animación 3D -->
+        <canvas id="hero-canvas"></canvas>
+        <div class="hero-content">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight text-white mb-4">
+                Bret Edwin Abel Tovar García
+            </h1>
+            <p class="text-xl sm:text-2xl font-light text-gray-400 max-w-2xl mx-auto mb-8">
+                AI Engineer & Data Analyst
+            </p>
+            <div class="space-x-4">
+                <a href="#contacto" class="inline-block px-8 py-3 bg-blue-500 text-white rounded-full font-semibold hover:bg-blue-600 transition-colors shadow-lg">
+                    Contáctame
+                </a>
+                <a href="#resumen" class="inline-block px-8 py-3 border border-gray-600 text-gray-300 rounded-full font-semibold hover:bg-gray-700 transition-colors">
+                    Mi Perfil
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Professional Summary Section -->
+    <section id="resumen" class="section">
+        <div class="bg-card rounded-3xl shadow-xl p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-white mb-6">Resumen Profesional</h2>
+            <p class="text-lg text-gray-300 leading-relaxed">
+                Ingeniero en IA con sólida formación en el sector tecnológico y una especialización avanzada en inteligencia artificial y análisis de datos. Actualmente soy el fundador de **Eficia Solutions**, una agencia de IA enfocada en la implementación de soluciones innovadoras para PyMEs y grandes empresas en Latinoamérica. Mi objetivo es aplicar mis conocimientos técnicos y experiencia para impulsar la innovación y el desarrollo de proyectos de vanguardia en el sector bancario.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="habilidades" class="section">
+        <h2 class="text-3xl font-bold text-white text-center mb-8">Habilidades Clave</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Skill Card: AI -->
+            <div class="bg-card rounded-2xl p-6 shadow-xl text-center">
+                <div class="text-blue-400 mb-4 text-4xl">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Inteligencia Artificial</h3>
+                <p class="text-gray-400 text-sm">Machine Learning, Deep Learning, NLP, Modelos predictivos.</p>
+            </div>
+            <!-- Skill Card: Data Analysis -->
+            <div class="bg-card rounded-2xl p-6 shadow-xl text-center">
+                <div class="text-green-400 mb-4 text-4xl">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Análisis de Datos & BI</h3>
+                <p class="text-gray-400 text-sm">Power BI, visualización de datos, dashboards, análisis estratégico.</p>
+            </div>
+            <!-- Skill Card: Programming -->
+            <div class="bg-card rounded-2xl p-6 shadow-xl text-center">
+                <div class="text-orange-400 mb-4 text-4xl">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-white mb-2">Lenguajes y Herramientas</h3>
+                <p class="text-gray-400 text-sm">Python (PyTorch, TensorFlow), SQL, R, bases de datos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education and Experience Section -->
+    <section id="formacion" class="section">
+        <h2 class="text-3xl font-bold text-white text-center mb-8">Formación y Experiencia</h2>
+        <div class="space-y-8 relative">
+            <!-- Timeline Line -->
+            <div class="absolute left-6 md:left-1/2 -ml-0.5 w-1 h-full bg-gray-700 transform -translate-x-1/2"></div>
+            
+            <!-- Current Business -->
+            <div class="relative pl-12 md:pl-0 flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="md:w-1/2 md:text-right md:pr-12">
+                    <h3 class="text-xl font-semibold text-white">Fundador, Eficia Solutions</h3>
+                    <p class="text-gray-400">Agencia de IA</p>
+                    <p class="text-gray-500 text-sm">Actualidad</p>
+                </div>
+                <div class="absolute left-4 md:left-1/2 top-0 md:top-auto transform -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-gray-900"></div>
+                <div class="md:w-1/2 pt-2 md:pt-0 md:pl-12">
+                    <p class="text-gray-300">Dirijo una agencia de IA enfocada en la implementación de soluciones para empresas, incluyendo una filial, Agrointeli Solutions, especializada en el sector agroindustrial.</p>
+                </div>
+            </div>
+
+            <!-- Experience Item -->
+            <div class="relative pl-12 md:pl-0 flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="md:w-1/2 md:text-right md:pr-12">
+                    <h3 class="text-xl font-semibold text-white">Logística Industrial</h3>
+                    <p class="text-gray-400">Unileven Venezuela</p>
+                    <p class="text-gray-500 text-sm">2018</p>
+                </div>
+                <div class="absolute left-4 md:left-1/2 top-0 md:top-auto transform -translate-x-1/2 w-6 h-6 rounded-full bg-yellow-500 border-4 border-gray-900"></div>
+                <div class="md:w-1/2 pt-2 md:pt-0 md:pl-12">
+                    <p class="text-gray-300 leading-relaxed">Logré la reducción del tiempo de carga y descarga gracias a la implementación de un procedimiento efectivo de entrada y salida, eliminando una pérdida de tiempo de una hora promedio.</p>
+                </div>
+            </div>
+
+            <!-- Education Item -->
+            <div class="relative pl-12 md:pl-0 flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="md:w-1/2 md:text-right md:pr-12">
+                    <h3 class="text-xl font-semibold text-white">Especialización en IA y Datos</h3>
+                    <p class="text-gray-400">Daxus LATAM, Brasil</p>
+                    <p class="text-gray-500 text-sm">2024</p>
+                </div>
+                <div class="absolute left-4 md:left-1/2 top-0 md:top-auto transform -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-gray-900"></div>
+                <div class="md:w-1/2 pt-2 md:pt-0 md:pl-12">
+                    <p class="text-gray-300">Enfoque en la aplicación práctica de modelos de ML y NLP.</p>
+                </div>
+            </div>
+
+            <!-- Education Item -->
+            <div class="relative pl-12 md:pl-0 flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="md:w-1/2 md:text-right md:pr-12">
+                    <h3 class="text-xl font-semibold text-white">Especialización en IA</h3>
+                    <p class="text-gray-400">Big School, España</p>
+                    <p class="text-gray-500 text-sm">2023</p>
+                </div>
+                <div class="absolute left-4 md:left-1/2 top-0 md:top-auto transform -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-gray-900"></div>
+                <div class="md:w-1/2 pt-2 md:pt-0 md:pl-12">
+                    <p class="text-gray-300">Formación integral en las tecnologías emergentes de IA.</p>
+                </div>
+            </div>
+
+            <!-- Education Item -->
+            <div class="relative pl-12 md:pl-0 flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="md:w-1/2 md:text-right md:pr-12">
+                    <h3 class="text-xl font-semibold text-white">Técnico en Seguridad Industrial</h3>
+                    <p class="text-gray-400">IUTA</p>
+                    <p class="text-gray-500 text-sm">2018</p>
+                </div>
+                <div class="absolute left-4 md:left-1/2 top-0 md:top-auto transform -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-gray-900"></div>
+                <div class="md:w-1/2 pt-2 md:pt-0 md:pl-12">
+                    <p class="text-gray-300">Formación técnica en seguridad industrial.</p>
+                </div>
+            </div>
+
+            <!-- Education Item -->
+            <div class="relative pl-12 md:pl-0 flex flex-col md:flex-row md:justify-between items-start md:items-center">
+                <div class="md:w-1/2 md:text-right md:pr-12">
+                    <h3 class="text-xl font-semibold text-white">Técnico en Informática</h3>
+                    <p class="text-gray-400">Escuela Técnica Simón Rodríguez</p>
+                    <p class="text-gray-500 text-sm">2013</p>
+                </div>
+                <div class="absolute left-4 md:left-1/2 top-0 md:top-auto transform -translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 border-4 border-gray-900"></div>
+                <div class="md:w-1/2 pt-2 md:pt-0 md:pl-12">
+                    <p class="text-gray-300">Formación técnica en informática.</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="section text-center">
+        <div class="bg-card rounded-3xl shadow-xl p-8 md:p-12">
+            <h2 class="text-3xl font-bold text-white mb-6">Contáctame</h2>
+            <p class="text-lg text-gray-300 max-w-xl mx-auto mb-8">
+                Estoy a tu disposición para cualquier consulta. No dudes en contactarme para discutir cómo puedo aportar a tu equipo.
+            </p>
+            <div class="space-y-4 md:space-y-0 md:space-x-8 flex flex-col md:flex-row justify-center items-center">
+                <a href="mailto:Brettovargarcia@gmail.com" class="flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+                    <i class="fas fa-envelope mr-2"></i> Brettovargarcia@gmail.com
+                </a>
+                <a href="tel:0983195953" class="flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+                    <i class="fas fa-phone-alt mr-2"></i> 0983195953
+                </a>
+                <a href="https://www.youtube.com/@BretImpulsa" target="_blank" class="flex items-center text-blue-400 hover:text-blue-300 transition-colors">
+                    <i class="fab fa-youtube mr-2"></i> Bret Impulsa
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center py-8 text-gray-500 text-sm">
+        <p>&copy; 2025 Bret Tovar. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Toggle mobile menu
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // 3D Scene Setup
+        window.onload = function() {
+            const canvas = document.getElementById('hero-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            // Posicionamiento de la cámara
+            camera.position.z = 25;
+
+            // Creación de la geometría (una esfera para los puntos)
+            const geometry = new THREE.BufferGeometry();
+            const vertices = [];
+            const particleCount = 2000;
+            const radius = 10;
+            for (let i = 0; i < particleCount; i++) {
+                const x = THREE.MathUtils.randFloatSpread(radius * 2);
+                const y = THREE.MathUtils.randFloatSpread(radius * 2);
+                const z = THREE.MathUtils.randFloatSpread(radius * 2);
+                vertices.push(x, y, z);
+            }
+            geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+            // Creación del material para los puntos
+            const material = new THREE.PointsMaterial({
+                color: 0x3B82F6,
+                size: 0.1,
+                transparent: true,
+                opacity: 0.8,
+                sizeAttenuation: true
+            });
+
+            // Creación de la malla (la red de puntos)
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Variables para la interacción con el mouse/touch
+            let mouseX = 0;
+            let mouseY = 0;
+            const windowHalfX = window.innerWidth / 2;
+            const windowHalfY = window.innerHeight / 2;
+
+            function onDocumentMouseMove(event) {
+                mouseX = (event.clientX - windowHalfX);
+                mouseY = (event.clientY - windowHalfY);
+            }
+            function onDocumentTouchMove(event) {
+                if (event.touches.length === 1) {
+                    mouseX = (event.touches[0].pageX - windowHalfX);
+                    mouseY = (event.touches[0].pageY - windowHalfY);
+                }
+            }
+            document.addEventListener('mousemove', onDocumentMouseMove, false);
+            document.addEventListener('touchmove', onDocumentTouchMove, false);
+
+            // Loop de animación
+            const animate = function() {
+                requestAnimationFrame(animate);
+
+                // Mueve la red de partículas lentamente
+                particles.rotation.x += 0.0005;
+                particles.rotation.y += 0.001;
+
+                // Mueve la cámara en base a la posición del mouse
+                camera.position.x += (mouseX * 0.001 - camera.position.x) * 0.05;
+                camera.position.y += (-mouseY * 0.001 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+            };
+
+            // Manejo de redimensionamiento de la ventana
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            animate(); // Inicia el bucle de animación
+        };
+    </script>
+</body>
+</html>
